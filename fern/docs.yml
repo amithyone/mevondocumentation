@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: mevonpay.docs.buildwithfern.com
+
+title: MevonPay | Documentation
+
+colors:
+  accent-primary:
+    dark: "#0a8a47"
+    light: "#0a8a47"
+
+navigation:
+  - section: Guides
+    contents:
+      - page: Introduction
+        path: pages/introduction.mdx
+      - page: Authentication
+        path: pages/authentication.mdx
+      - page: Response Envelope
+        path: pages/response-envelope.mdx
+      - page: Webhooks
+        path: pages/webhooks.mdx
+      - page: Error Handling
+        path: pages/error-handling.mdx
+      - page: API Testing
+        path: pages/api-testing.mdx
+  - api: MevonPay API
+    layout:
+      - Account:
+          - balance
+      - Virtual Accounts:
+          - create-temp-va
+          - create-dynamic-va
+          - create-rubies-va
+      - Bank:
+          - bank-service
+      - Transfers:
+          - create-transfer
+          - payout
+          - transfer-status
+      - Exchange:
+          - exchange
+      - Virtual Cards:
+          - card-create
+          - card-topup
+          - card-withdraw
+          - card-status
+          - card-balance
+          - card-transactions
+          - card-details
+      - VTU:
+          - vtu-electricity
+          - vtu-cabletv
+          - vtu-airtime
+          - vtu-data
+          - vtu-betting

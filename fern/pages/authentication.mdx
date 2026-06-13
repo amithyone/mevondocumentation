@@ -1,0 +1,29 @@
+---
+title: Authentication
+---
+
+MevonPay supports multiple authorization header formats. Use the style documented for each endpoint.
+
+| Style | Header format | Used on |
+|-------|---------------|---------|
+| **Raw secret** | `Authorization: {SECRET_KEY}` | Balance, exchange, createtransfer, bank_service, virtual accounts, most card endpoints |
+| **Bearer** | `Authorization: Bearer {SECRET_KEY}` | VTU, TSQ, card fallback |
+| **Token** | `Authorization: Token {SECRET_KEY}` | `/V1/payout` |
+
+## Transfer and payout password
+
+Endpoints that move money (`/V1/createtransfer`, `/V1/payout`) require:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `currentPassword` | string | Yes | Account transaction password on your MevonPay merchant profile |
+
+## Webhook authentication (inbound)
+
+When MevonPay POSTs events to your server:
+
+| Method | Description |
+|--------|-------------|
+| Bearer secret | `Authorization: Bearer {WEBHOOK_SECRET}` |
+| IP allowlist | Optional restriction to MevonPay egress IPs |
+| Domain allowlist | Optional restriction on Origin / Referer |

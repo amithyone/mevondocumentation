@@ -1,0 +1,49 @@
+---
+title: Webhooks
+---
+
+MevonPay POSTs JSON events to your configured webhook URL (e.g. `https://your-domain.com/api/v1/webhook/mevonpay`).
+
+## Event envelope
+
+```json
+{
+  "event": "event.name",
+  "data": { }
+}
+```
+
+Event field aliases: `event`, `eventType`, `type`, `action`, or nested `data.event`.
+
+## funding.success
+
+```json
+{
+  "event": "funding.success",
+  "data": {
+    "account_number": "8880324727",
+    "amount": 2575.00,
+    "reference": "100004260518170536160223787208",
+    "sender": "DANIEL DAVID JOSEPH",
+    "bank_name": "OPAY",
+    "narration": "Payment for order #1234",
+    "timestamp": "2026-05-18 18:05:41.247"
+  }
+}
+```
+
+Return HTTP `200` with `{ "success": true }`.
+
+## card.created
+
+Accepted names: `card.created`, `card.created.success`, `card_created`, `card.ready`, `card.active`, and others.
+
+## card.topup.success
+
+Key fields: `card_code`, `new_balance`, `reference`.
+
+## card.spend.success
+
+Key fields: `card_code`, `amount`, `drcr`, `description`, `balance`.
+
+Field aliases: `card_id` / `card_code`.

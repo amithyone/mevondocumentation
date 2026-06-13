@@ -1,0 +1,36 @@
+---
+title: Response Envelope
+---
+
+## Standard JSON API response
+
+```json
+{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": { }
+}
+```
+
+Success may also be indicated by `status: true`, `code: "success"`, or nested `data.success`. Messages may use `message` or `msg`.
+
+## Transfer / payout / TSQ response
+
+```json
+{
+  "responseCode": "00",
+  "responseMessage": "Transfer successful",
+  "status": true,
+  "reference": "MERCHANT-REF-001"
+}
+```
+
+## Response codes
+
+| Code | Meaning |
+|------|---------|
+| `00` | Successful |
+| `09`, `90`, `99` | Pending |
+| Other | Failed |
+
+Additional success signals: `transactionStatus` of `success` / `successful` / `completed`, or HTTP `2xx` with empty body on some transfer paths.

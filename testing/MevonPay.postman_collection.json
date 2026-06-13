@@ -1,0 +1,1050 @@
+{
+  "info": {
+    "_postman_id": "mevonpay-api-v1",
+    "name": "MevonPay API",
+    "description": "Official-style MevonPay API collection (v1.0). Import with MevonPay.postman_environment.json and set secret_key + current_password.\n\nAuth styles:\n- Raw: Authorization header = secret key only\n- Bearer: Authorization: Bearer {key}\n- Token: Authorization: Token {key}",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://sandbox-api.mevonpay.com"
+    },
+    {
+      "key": "secret_key",
+      "value": ""
+    },
+    {
+      "key": "current_password",
+      "value": ""
+    },
+    {
+      "key": "debit_account_name",
+      "value": ""
+    },
+    {
+      "key": "debit_account_number",
+      "value": ""
+    },
+    {
+      "key": "reference",
+      "value": "TEST-REF-001"
+    },
+    {
+      "key": "card_code",
+      "value": ""
+    },
+    {
+      "key": "card_id",
+      "value": ""
+    },
+    {
+      "key": "request_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Balance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/balance",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Virtual Accounts",
+      "item": [
+        {
+          "name": "Create Temp VA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"rubies\",\n  \"fname\": \"John\",\n  \"lname\": \"Doe\",\n  \"registration_number\": \"12345678901\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/createtempva.php",
+            "description": ""
+          }
+        },
+        {
+          "name": "Create Dynamic VA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 15000,\n  \"currency\": \"NGN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/createdynamic",
+            "description": ""
+          }
+        },
+        {
+          "name": "Create Rubies VA (Personal)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"create\",\n  \"account_type\": \"personal\",\n  \"fname\": \"John\",\n  \"lname\": \"Doe\",\n  \"phone\": \"09087654321\",\n  \"dob\": \"1990-05-20\",\n  \"email\": \"john@example.com\",\n  \"bvn\": \"12345678901\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/createrubies",
+            "description": ""
+          }
+        },
+        {
+          "name": "Create Rubies VA (Business)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"create\",\n  \"account_type\": \"business\",\n  \"cac\": \"RC123456\",\n  \"phone\": \"09087654321\",\n  \"dob\": \"2010-05-20\",\n  \"email\": \"contact@business.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/createrubies",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bank Service",
+      "item": [
+        {
+          "name": "Get Bank List",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"getBankList\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/bank_service",
+            "description": ""
+          }
+        },
+        {
+          "name": "Name Enquiry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"nameEnquiry\",\n  \"bankCode\": \"000058\",\n  \"accountNumber\": \"0123456789\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/bank_service",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transfers & Payouts",
+      "item": [
+        {
+          "name": "Create Transfer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 5000,\n  \"bankCode\": \"000058\",\n  \"bankName\": \"GTBank\",\n  \"creditAccountName\": \"JOHN DOE\",\n  \"creditAccountNumber\": \"0123456789\",\n  \"debitAccountName\": \"{{debit_account_name}}\",\n  \"debitAccountNumber\": \"{{debit_account_number}}\",\n  \"narration\": \"Test transfer\",\n  \"reference\": \"{{reference}}\",\n  \"currentPassword\": \"{{current_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/createtransfer",
+            "description": ""
+          }
+        },
+        {
+          "name": "Payout (VA debit)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 5000,\n  \"bankCode\": \"000058\",\n  \"bankName\": \"GTBank\",\n  \"creditAccountName\": \"JOHN DOE\",\n  \"creditAccountNumber\": \"0123456789\",\n  \"debitAccountName\": \"{{payout_debit_account_name}}\",\n  \"debitAccountNumber\": \"{{payout_debit_account_number}}\",\n  \"narration\": \"Wallet payout\",\n  \"reference\": \"{{reference}}\",\n  \"currentPassword\": \"{{current_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/payout",
+            "description": ""
+          }
+        },
+        {
+          "name": "Transaction Status (TSQ)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"{{reference}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/tsk",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Currency Exchange",
+      "item": [
+        {
+          "name": "NGN \u2192 USD rate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 1,\n  \"from_currency\": \"NGN\",\n  \"to_currency\": \"USD\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/exchange",
+            "description": ""
+          }
+        },
+        {
+          "name": "USD \u2192 NGN rate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 1,\n  \"from_currency\": \"USD\",\n  \"to_currency\": \"NGN\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/exchange",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Virtual Dollar Cards",
+      "item": [
+        {
+          "name": "Create Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"create\",\n  \"amount\": 5.0,\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"phoneNumber\": \"08012345678\",\n  \"dob\": \"1990-05-20\",\n  \"homeNumber\": \"12\",\n  \"homeAddress\": \"123 Main Street, Lagos\",\n  \"cardName\": \"JOHN DOE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_request",
+            "description": ""
+          }
+        },
+        {
+          "name": "Top Up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 10.0,\n  \"card_code\": \"{{card_code}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_topup",
+            "description": ""
+          }
+        },
+        {
+          "name": "Withdraw",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 5.0,\n  \"card_code\": \"{{card_code}}\",\n  \"reason\": \"Withdrawal to Wallet\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_withdraw",
+            "description": ""
+          }
+        },
+        {
+          "name": "Freeze",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"freeze\",\n  \"card_code\": \"{{card_code}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_status",
+            "description": ""
+          }
+        },
+        {
+          "name": "Unfreeze",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"unfreeze\",\n  \"card_code\": \"{{card_code}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_status",
+            "description": ""
+          }
+        },
+        {
+          "name": "Balance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"{{request_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_balance",
+            "description": ""
+          }
+        },
+        {
+          "name": "Transactions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_code\": \"{{card_code}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_transactions",
+            "description": ""
+          }
+        },
+        {
+          "name": "Details",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_id\": \"{{card_id}}\",\n  \"card_code\": \"{{card_code}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/card_details",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "VTU \u2014 Electricity",
+      "item": [
+        {
+          "name": "getInfo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"getInfo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/electricity",
+            "description": ""
+          }
+        },
+        {
+          "name": "verify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"verify\",\n  \"meter\": \"45012345678\",\n  \"providerCode\": \"ikedc\",\n  \"planCode\": \"PREPAID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/electricity",
+            "description": ""
+          }
+        },
+        {
+          "name": "buy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"buy\",\n  \"meter\": \"45012345678\",\n  \"providerCode\": \"ikedc\",\n  \"planCode\": \"PREPAID\",\n  \"amount\": 5000,\n  \"customerName\": \"JOHN DOE\",\n  \"phone\": \"08012345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/electricity",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "VTU \u2014 Cable TV",
+      "item": [
+        {
+          "name": "getInfo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"getInfo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/cabletv",
+            "description": ""
+          }
+        },
+        {
+          "name": "verify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"verify\",\n  \"smartcard\": \"1234567890\",\n  \"providerCode\": \"dstv\",\n  \"planCode\": \"DSTV-PADI\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/cabletv",
+            "description": ""
+          }
+        },
+        {
+          "name": "buy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"buy\",\n  \"smartcard\": \"1234567890\",\n  \"providerCode\": \"dstv\",\n  \"planCode\": \"DSTV-PADI\",\n  \"amount\": 4400,\n  \"customerName\": \"JOHN DOE\",\n  \"phone\": \"08012345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/cabletv",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "VTU \u2014 Airtime",
+      "item": [
+        {
+          "name": "getInfo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"getInfo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/airtime",
+            "description": ""
+          }
+        },
+        {
+          "name": "buy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"buy\",\n  \"providerCode\": \"mtn\",\n  \"phone\": \"08012345678\",\n  \"amount\": 500,\n  \"reference\": \"CP-MAIR-TEST001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/airtime",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "VTU \u2014 Data",
+      "item": [
+        {
+          "name": "getInfo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"getInfo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/data",
+            "description": ""
+          }
+        },
+        {
+          "name": "buy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"buy\",\n  \"providerCode\": \"mtn\",\n  \"phone\": \"08012345678\",\n  \"planCode\": \"1GB-DAILY\",\n  \"amount\": 350,\n  \"reference\": \"CP-MDAT-TEST001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/data",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "VTU \u2014 Betting",
+      "item": [
+        {
+          "name": "getInfo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"getInfo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/betting",
+            "description": ""
+          }
+        },
+        {
+          "name": "verify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"verify\",\n  \"providerCode\": \"bet9ja\",\n  \"customerId\": \"BET123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/betting",
+            "description": ""
+          }
+        },
+        {
+          "name": "buy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{secret_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"buy\",\n  \"providerCode\": \"bet9ja\",\n  \"customerId\": \"BET123456\",\n  \"amount\": 1000,\n  \"phone\": \"08012345678\",\n  \"reference\": \"CP-MBET-TEST001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/V1/betting",
+            "description": ""
+          }
+        }
+      ]
+    }
+  ]
+}

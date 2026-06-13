@@ -1,0 +1,30 @@
+---
+title: Introduction
+---
+
+MevonPay provides REST-style JSON APIs for Nigerian fintech integrations:
+
+- **Virtual accounts** — temporary, dynamic, and permanent Rubies accounts
+- **Bank transfers & payouts** — NIP transfers from merchant float or customer virtual accounts
+- **Currency exchange** — NGN ↔ USD wallet conversion
+- **Virtual dollar cards** — issue, fund, freeze, withdraw, and transaction history
+- **Bill payments (VTU)** — airtime, data, electricity, cable TV, and betting
+- **Webhooks** — real-time funding and card lifecycle notifications
+
+## Base URL
+
+| Environment | Example |
+|-------------|---------|
+| Production | `https://api.mevonpay.com` |
+| Sandbox | `https://sandbox-api.mevonpay.com` |
+
+## Conventions
+
+- **Method:** `POST` for all API calls
+- **Content-Type:** `application/json`
+- **Bank codes:** 6-digit NIP format (e.g. `000058` for GTBank)
+- **References:** Must be unique per transaction
+
+## Documentation feedback
+
+This reference reflects live production integrations. MevonPay recommends standardizing authentication (Raw / Bearer / Token), success flags, and field naming across all public endpoints.

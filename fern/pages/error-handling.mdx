@@ -1,0 +1,24 @@
+---
+title: Error Handling
+---
+
+| HTTP status | Meaning |
+|-------------|---------|
+| `2xx` | Request accepted — check body for business-level success |
+| `4xx` | Validation or authentication error |
+| `5xx` | Provider error — retry with backoff |
+
+```json
+{
+  "success": false,
+  "message": "Insufficient balance",
+  "code": "INSUFFICIENT_FUNDS"
+}
+```
+
+## Idempotency
+
+1. Use a unique `reference` for every transfer and VTU purchase.
+2. Return HTTP `200` for processed and duplicate webhook events.
+3. Poll `/V1/tsk` when `responseCode` is `09`, `90`, or `99`.
+4. Wait 30–60 seconds before first TSQ poll; do not poll more than once every 10 seconds.

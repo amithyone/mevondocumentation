@@ -1,0 +1,443 @@
+# MevonPay API — REST Client (Cursor / VS Code)
+# Install extension: "REST Client" (Huachao Mao) if "Send Request" links don't appear.
+# Edit variables below, then click "Send Request" above any ### block.
+
+@baseUrl = https://sandbox-api.mevonpay.com
+@secretKey = PASTE_YOUR_MEVONPAY_SECRET_KEY
+@currentPassword = PASTE_YOUR_TRANSACTION_PASSWORD
+@debitAccountName = YOUR MERCHANT DEBIT NAME
+@debitAccountNumber = 0000000000
+@reference = TEST-REF-{{$timestamp}}
+@cardCode = VCARD2026060611150700359
+@cardId = bab449bb-15e9-404a-aa73-657519df4794
+@requestId = 766f5cdb-9956-4cec-af77-b520f624acc3
+
+###############################################################################
+# ACCOUNT
+###############################################################################
+
+### 1. Balance (Raw auth)
+POST {{baseUrl}}/V1/balance
+Authorization: {{secretKey}}
+Content-Type: application/json
+Accept: application/json
+
+{}
+
+###############################################################################
+# VIRTUAL ACCOUNTS
+###############################################################################
+
+### 2. Temporary VA (Raw auth)
+POST {{baseUrl}}/V1/createtempva.php
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "type": "rubies",
+  "fname": "John",
+  "lname": "Doe",
+  "registration_number": "12345678901"
+}
+
+### 3. Dynamic VA (Raw auth)
+POST {{baseUrl}}/V1/createdynamic
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "amount": 15000,
+  "currency": "NGN"
+}
+
+### 4a. Rubies VA — Personal (Raw auth)
+POST {{baseUrl}}/V1/createrubies
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "create",
+  "account_type": "personal",
+  "fname": "John",
+  "lname": "Doe",
+  "phone": "09087654321",
+  "dob": "1990-05-20",
+  "email": "john@example.com",
+  "bvn": "12345678901"
+}
+
+### 4b. Rubies VA — Business (Raw auth)
+POST {{baseUrl}}/V1/createrubies
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "create",
+  "account_type": "business",
+  "cac": "RC123456",
+  "phone": "09087654321",
+  "dob": "2010-05-20",
+  "email": "contact@business.com"
+}
+
+###############################################################################
+# BANK SERVICE
+###############################################################################
+
+### 5a. Bank list (Raw auth)
+POST {{baseUrl}}/V1/bank_service
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "getBankList"
+}
+
+### 5b. Name enquiry (Raw auth)
+POST {{baseUrl}}/V1/bank_service
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "nameEnquiry",
+  "bankCode": "000058",
+  "accountNumber": "0123456789"
+}
+
+###############################################################################
+# TRANSFERS & PAYOUTS
+###############################################################################
+
+### 6. Create transfer (Raw auth)
+POST {{baseUrl}}/V1/createtransfer
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "amount": 5000,
+  "bankCode": "000058",
+  "bankName": "GTBank",
+  "creditAccountName": "JOHN DOE",
+  "creditAccountNumber": "0123456789",
+  "debitAccountName": "{{debitAccountName}}",
+  "debitAccountNumber": "{{debitAccountNumber}}",
+  "narration": "Test transfer",
+  "reference": "{{reference}}",
+  "currentPassword": "{{currentPassword}}"
+}
+
+### 7. Payout — debit customer VA (Token auth)
+POST {{baseUrl}}/V1/payout
+Authorization: Token {{secretKey}}
+Content-Type: application/json
+
+{
+  "amount": 5000,
+  "bankCode": "000058",
+  "bankName": "GTBank",
+  "creditAccountName": "JOHN DOE",
+  "creditAccountNumber": "0123456789",
+  "debitAccountName": "CUSTOMER VA NAME",
+  "debitAccountNumber": "8880324727",
+  "narration": "Wallet payout",
+  "reference": "{{reference}}",
+  "currentPassword": "{{currentPassword}}"
+}
+
+### 8. Transaction status / TSQ (Bearer auth)
+POST {{baseUrl}}/V1/tsk
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reference": "{{reference}}"
+}
+
+###############################################################################
+# CURRENCY EXCHANGE
+###############################################################################
+
+### 9a. Exchange rate NGN → USD (Raw auth)
+POST {{baseUrl}}/V1/exchange
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "amount": 1,
+  "from_currency": "NGN",
+  "to_currency": "USD"
+}
+
+### 9b. Exchange USD → NGN (Raw auth)
+POST {{baseUrl}}/V1/exchange
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "amount": 1,
+  "from_currency": "USD",
+  "to_currency": "NGN"
+}
+
+###############################################################################
+# VIRTUAL DOLLAR CARDS
+###############################################################################
+
+### 10. Create card (Raw auth)
+POST {{baseUrl}}/V1/card_request
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "create",
+  "amount": 5.00,
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john@example.com",
+  "phoneNumber": "08012345678",
+  "dob": "1990-05-20",
+  "homeNumber": "12",
+  "homeAddress": "123 Main Street, Lagos",
+  "cardName": "JOHN DOE"
+}
+
+### 11. Top up card (Raw auth)
+POST {{baseUrl}}/V1/card_topup
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "amount": 10.00,
+  "card_code": "{{cardCode}}"
+}
+
+### 12. Withdraw from card (Raw auth)
+POST {{baseUrl}}/V1/card_withdraw
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "amount": 5.00,
+  "card_code": "{{cardCode}}",
+  "reason": "Withdrawal to Wallet"
+}
+
+### 13a. Freeze card (Raw auth)
+POST {{baseUrl}}/V1/card_status
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "freeze",
+  "card_code": "{{cardCode}}"
+}
+
+### 13b. Unfreeze card (Raw auth)
+POST {{baseUrl}}/V1/card_status
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "unfreeze",
+  "card_code": "{{cardCode}}"
+}
+
+### 14. Card balance (Raw auth)
+POST {{baseUrl}}/V1/card_balance
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "request_id": "{{requestId}}"
+}
+
+### 15. Card transactions (Raw auth)
+POST {{baseUrl}}/V1/card_transactions
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "card_code": "{{cardCode}}"
+}
+
+### 16. Card details (Raw auth)
+POST {{baseUrl}}/V1/card_details
+Authorization: {{secretKey}}
+Content-Type: application/json
+
+{
+  "card_id": "{{cardId}}",
+  "card_code": "{{cardCode}}"
+}
+
+###############################################################################
+# VTU — ELECTRICITY (Bearer auth)
+###############################################################################
+
+### 17a. Electricity — getInfo
+POST {{baseUrl}}/V1/electricity
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "getInfo"
+}
+
+### 17b. Electricity — verify
+POST {{baseUrl}}/V1/electricity
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "verify",
+  "meter": "45012345678",
+  "providerCode": "ikedc",
+  "planCode": "PREPAID"
+}
+
+### 17c. Electricity — buy
+POST {{baseUrl}}/V1/electricity
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "buy",
+  "meter": "45012345678",
+  "providerCode": "ikedc",
+  "planCode": "PREPAID",
+  "amount": 5000,
+  "customerName": "JOHN DOE",
+  "phone": "08012345678"
+}
+
+###############################################################################
+# VTU — CABLE TV (Bearer auth)
+###############################################################################
+
+### 18a. Cable TV — getInfo
+POST {{baseUrl}}/V1/cabletv
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "getInfo"
+}
+
+### 18b. Cable TV — verify
+POST {{baseUrl}}/V1/cabletv
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "verify",
+  "smartcard": "1234567890",
+  "providerCode": "dstv",
+  "planCode": "DSTV-PADI"
+}
+
+### 18c. Cable TV — buy
+POST {{baseUrl}}/V1/cabletv
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "buy",
+  "smartcard": "1234567890",
+  "providerCode": "dstv",
+  "planCode": "DSTV-PADI",
+  "amount": 4400,
+  "customerName": "JOHN DOE",
+  "phone": "08012345678"
+}
+
+###############################################################################
+# VTU — AIRTIME (Bearer auth)
+###############################################################################
+
+### 19a. Airtime — getInfo
+POST {{baseUrl}}/V1/airtime
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "getInfo"
+}
+
+### 19b. Airtime — buy
+POST {{baseUrl}}/V1/airtime
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "buy",
+  "providerCode": "mtn",
+  "phone": "08012345678",
+  "amount": 500,
+  "reference": "CP-MAIR-TEST001"
+}
+
+###############################################################################
+# VTU — DATA (Bearer auth)
+###############################################################################
+
+### 20a. Data — getInfo
+POST {{baseUrl}}/V1/data
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "getInfo"
+}
+
+### 20b. Data — buy
+POST {{baseUrl}}/V1/data
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "buy",
+  "providerCode": "mtn",
+  "phone": "08012345678",
+  "planCode": "1GB-DAILY",
+  "amount": 350,
+  "reference": "CP-MDAT-TEST001"
+}
+
+###############################################################################
+# VTU — BETTING (Bearer auth)
+###############################################################################
+
+### 21a. Betting — getInfo
+POST {{baseUrl}}/V1/betting
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "getInfo"
+}
+
+### 21b. Betting — verify
+POST {{baseUrl}}/V1/betting
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "verify",
+  "providerCode": "bet9ja",
+  "customerId": "BET123456"
+}
+
+### 21c. Betting — buy
+POST {{baseUrl}}/V1/betting
+Authorization: Bearer {{secretKey}}
+Content-Type: application/json
+
+{
+  "action": "buy",
+  "providerCode": "bet9ja",
+  "customerId": "BET123456",
+  "amount": 1000,
+  "phone": "08012345678",
+  "reference": "CP-MBET-TEST001"
+}
