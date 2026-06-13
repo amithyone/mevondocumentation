@@ -1,66 +1,44 @@
 # MevonPay Documentation
 
-Official-style MevonPay API documentation — virtual accounts, transfers, FX, virtual dollar cards, VTU bill payments, and webhooks.
+Official MevonPay API reference and **ready-to-run API collections** — no doc platform required.
 
-**Live site:** [mevonpay-209643.docs.buildwithfern.com](https://mevonpay-209643.docs.buildwithfern.com)
+**Repo:** [github.com/amithyone/mevondocumentation](https://github.com/amithyone/mevondocumentation)
 
-## Repository layout
+## Quick start — test the API in 2 minutes
 
-| Path | Purpose |
-|------|---------|
-| `fern/` | Fern docs site (OpenAPI + MDX guides) — **this is what Fern publishes** |
-| `reference/mevonpay-api-reference.md` | Full Markdown reference (source of truth) |
-| `testing/` | Postman collection + REST Client `.http` file |
+### Postman (easiest full experience)
 
-## Connect to Fern (one-time)
+1. Download [Postman](https://www.postman.com/downloads/)
+2. Import from `testing/`:
+   - `MevonPay.postman_collection.json`
+   - `MevonPay.postman_environment.json`
+3. Set `secret_key` and `base_url` in the **MevonPay Sandbox** environment
+4. Send **Account → Balance**
 
-1. Open [Fern Dashboard](https://dashboard.buildwithfern.com).
-2. Create or select the **mevonpay** organization.
-3. **Connect this GitHub repo:** `amithyone/mevondocumentation`
-4. Docs URL is set in `fern/docs.yml` (`mevonpay-209643.docs.buildwithfern.com`).
-5. Add GitHub repository secret **`FERN_TOKEN`** (API key from Fern Dashboard → Settings → API keys).
+**Step-by-step:** [`testing/GET_STARTED.md`](testing/GET_STARTED.md)
 
-## Publish
+### Other tools (same collection)
 
-**Automatic:** Push to `main` → GitHub Actions runs `fern generate --docs`.
+| Tool | Why use it |
+|------|------------|
+| [Bruno](https://www.usebruno.com) | Free, lightweight — import Postman JSON |
+| [Hoppscotch](https://hoppscotch.io) | Browser-only — import `testing/mevonpay-openapi.json` |
+| Cursor REST Client | Open `testing/mevonpay-api.http` → **Send Request** |
 
-**Manual (local):**
+## Documentation
 
-```bash
-npm install -g fern-api
-fern login          # or export FERN_TOKEN=...
-cd fern && fern check
-fern generate --docs --preview   # preview URL
-fern generate --docs             # production
-```
+| Path | What it is |
+|------|------------|
+| [`reference/mevonpay-api-reference.md`](reference/mevonpay-api-reference.md) | Complete Markdown API reference (969 lines) |
+| [`testing/`](testing/) | Postman collection, OpenAPI, `.http` file |
+| [`fern/`](fern/) | Optional Fern site config (ignore if not using Fern) |
 
-## Local preview
+## What’s covered
 
-```bash
-npx fern-api docs dev
-```
-
-Runs a local server with hot reload (default http://localhost:3000).
-
-## API testing
-
-Import `testing/MevonPay.postman_collection.json` + `testing/MevonPay.postman_environment.json` into Postman, Bruno, or Insomnia.
-
-In Cursor/VS Code, open `testing/mevonpay-api.http` and use **Send Request** (REST Client extension).
-
-## MCP (Cursor / AI tools)
-
-After publishing, connect Cursor to the docs MCP server:
-
-```json
-"mevonpay.docs.buildwithfern.com": {
-  "url": "https://mevonpay-209643.docs.buildwithfern.com/_mcp/server",
-  "headers": {}
-}
-```
+21 outbound endpoints + webhooks: virtual accounts, transfers, payouts, TSQ, FX, virtual dollar cards, VTU (airtime/data/electricity/cable/betting).
 
 ## Changelog
 
 | Version | Date | Notes |
 |---------|------|-------|
-| 1.0 | May 2026 | Initial integrated reference (21 API endpoints + webhooks) from CheckoutPay production code |
+| 1.0 | May 2026 | Initial integrated reference from CheckoutPay production code |

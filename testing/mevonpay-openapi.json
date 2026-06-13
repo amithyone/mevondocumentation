@@ -1,0 +1,1322 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MevonPay API",
+    "version": "1.0.0",
+    "description": "Production-integrated MevonPay API reference (virtual accounts, transfers, FX, virtual cards, VTU, webhooks). Derived from live CheckoutPay integrations."
+  },
+  "servers": [
+    {
+      "url": "https://api.mevonpay.com",
+      "description": "Production"
+    },
+    {
+      "url": "https://sandbox-api.mevonpay.com",
+      "description": "Sandbox"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "rawSecret": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Raw secret key: Authorization: {SECRET_KEY}"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Authorization: Bearer {SECRET_KEY}"
+      },
+      "tokenAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Token prefix: Authorization: Token {SECRET_KEY}"
+      }
+    }
+  },
+  "paths": {
+    "/V1/balance": {
+      "post": {
+        "operationId": "balance",
+        "summary": "Account Balance",
+        "description": "Retrieve live NGN and USD wallet balances.",
+        "tags": [
+          "Account"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "required": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/createtempva.php": {
+      "post": {
+        "operationId": "create-temp-va",
+        "summary": "Temporary Virtual Account",
+        "description": "",
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "rubies"
+                  },
+                  "fname": {
+                    "type": "string"
+                  },
+                  "lname": {
+                    "type": "string"
+                  },
+                  "registration_number": {
+                    "type": "string"
+                  },
+                  "bvn": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "fname",
+                  "lname",
+                  "registration_number"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/createdynamic": {
+      "post": {
+        "operationId": "create-dynamic-va",
+        "summary": "Dynamic Virtual Account",
+        "description": "",
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "example": "NGN"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "currency"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/createrubies": {
+      "post": {
+        "operationId": "create-rubies-va",
+        "summary": "Rubies Permanent VA",
+        "description": "",
+        "tags": [
+          "Virtual Accounts"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "example": "create"
+                  },
+                  "account_type": {
+                    "type": "string",
+                    "enum": [
+                      "personal",
+                      "business"
+                    ]
+                  },
+                  "fname": {
+                    "type": "string"
+                  },
+                  "lname": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "dob": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "bvn": {
+                    "type": "string"
+                  },
+                  "nin": {
+                    "type": "string"
+                  },
+                  "cac": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "account_type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/bank_service": {
+      "post": {
+        "operationId": "bank-service",
+        "summary": "Bank Service",
+        "description": "",
+        "tags": [
+          "Bank"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "getBankList",
+                      "nameEnquiry"
+                    ]
+                  },
+                  "bankCode": {
+                    "type": "string"
+                  },
+                  "accountNumber": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/createtransfer": {
+      "post": {
+        "operationId": "create-transfer",
+        "summary": "Create Transfer",
+        "description": "Merchant float NGN bank transfer. Auth: raw secret in Authorization header.",
+        "tags": [
+          "Transfers"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "bankCode": {
+                    "type": "string"
+                  },
+                  "bankName": {
+                    "type": "string"
+                  },
+                  "creditAccountName": {
+                    "type": "string"
+                  },
+                  "creditAccountNumber": {
+                    "type": "string"
+                  },
+                  "debitAccountName": {
+                    "type": "string"
+                  },
+                  "debitAccountNumber": {
+                    "type": "string"
+                  },
+                  "narration": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "sessionId": {
+                    "type": "string"
+                  },
+                  "currentPassword": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "bankCode",
+                  "bankName",
+                  "creditAccountName",
+                  "creditAccountNumber",
+                  "debitAccountName",
+                  "debitAccountNumber",
+                  "reference",
+                  "currentPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/payout": {
+      "post": {
+        "operationId": "payout",
+        "summary": "Payout (VA Debit)",
+        "description": "Debit customer VA and pay out to bank. Auth: Token {SECRET_KEY}.",
+        "tags": [
+          "Transfers"
+        ],
+        "security": [
+          {
+            "tokenAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "bankCode": {
+                    "type": "string"
+                  },
+                  "bankName": {
+                    "type": "string"
+                  },
+                  "creditAccountName": {
+                    "type": "string"
+                  },
+                  "creditAccountNumber": {
+                    "type": "string"
+                  },
+                  "debitAccountName": {
+                    "type": "string"
+                  },
+                  "debitAccountNumber": {
+                    "type": "string"
+                  },
+                  "narration": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "currentPassword": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "bankCode",
+                  "bankName",
+                  "creditAccountName",
+                  "creditAccountNumber",
+                  "debitAccountName",
+                  "debitAccountNumber",
+                  "reference",
+                  "currentPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/tsk": {
+      "post": {
+        "operationId": "transfer-status",
+        "summary": "Transaction Status Query",
+        "description": "",
+        "tags": [
+          "Transfers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reference": {
+                    "type": "string"
+                  },
+                  "payoutApi": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "reference"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/exchange": {
+      "post": {
+        "operationId": "exchange",
+        "summary": "Currency Exchange",
+        "description": "",
+        "tags": [
+          "Exchange"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "from_currency": {
+                    "type": "string",
+                    "enum": [
+                      "NGN",
+                      "USD"
+                    ]
+                  },
+                  "to_currency": {
+                    "type": "string",
+                    "enum": [
+                      "NGN",
+                      "USD"
+                    ]
+                  }
+                },
+                "required": [
+                  "amount",
+                  "from_currency",
+                  "to_currency"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/card_request": {
+      "post": {
+        "operationId": "card-create",
+        "summary": "Create Virtual Dollar Card",
+        "description": "",
+        "tags": [
+          "Virtual Cards"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "example": "create"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "dob": {
+                    "type": "string"
+                  },
+                  "homeNumber": {
+                    "type": "string"
+                  },
+                  "homeAddress": {
+                    "type": "string"
+                  },
+                  "cardName": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "amount",
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "phoneNumber",
+                  "dob",
+                  "homeNumber",
+                  "homeAddress",
+                  "cardName"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/card_topup": {
+      "post": {
+        "operationId": "card-topup",
+        "summary": "Top Up Virtual Card",
+        "description": "",
+        "tags": [
+          "Virtual Cards"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "card_code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "card_code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/card_withdraw": {
+      "post": {
+        "operationId": "card-withdraw",
+        "summary": "Withdraw From Virtual Card",
+        "description": "",
+        "tags": [
+          "Virtual Cards"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "card_code": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "card_code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/card_status": {
+      "post": {
+        "operationId": "card-status",
+        "summary": "Freeze / Unfreeze Card",
+        "description": "",
+        "tags": [
+          "Virtual Cards"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "freeze",
+                      "unfreeze"
+                    ]
+                  },
+                  "card_code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "card_code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/card_balance": {
+      "post": {
+        "operationId": "card-balance",
+        "summary": "Virtual Card Balance",
+        "description": "",
+        "tags": [
+          "Virtual Cards"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "request_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "request_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/card_transactions": {
+      "post": {
+        "operationId": "card-transactions",
+        "summary": "Virtual Card Transactions",
+        "description": "",
+        "tags": [
+          "Virtual Cards"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "card_code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "card_code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/card_details": {
+      "post": {
+        "operationId": "card-details",
+        "summary": "Virtual Card Details",
+        "description": "",
+        "tags": [
+          "Virtual Cards"
+        ],
+        "security": [
+          {
+            "rawSecret": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "card_id": {
+                    "type": "string"
+                  },
+                  "card_code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "card_id",
+                  "card_code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/electricity": {
+      "post": {
+        "operationId": "vtu-electricity",
+        "summary": "Electricity VTU",
+        "description": "",
+        "tags": [
+          "VTU"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "getInfo",
+                      "verify",
+                      "buy"
+                    ]
+                  },
+                  "meter": {
+                    "type": "string"
+                  },
+                  "providerCode": {
+                    "type": "string"
+                  },
+                  "planCode": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "customerName": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/cabletv": {
+      "post": {
+        "operationId": "vtu-cabletv",
+        "summary": "Cable TV VTU",
+        "description": "",
+        "tags": [
+          "VTU"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "getInfo",
+                      "verify",
+                      "buy"
+                    ]
+                  },
+                  "smartcard": {
+                    "type": "string"
+                  },
+                  "providerCode": {
+                    "type": "string"
+                  },
+                  "planCode": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "customerName": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/airtime": {
+      "post": {
+        "operationId": "vtu-airtime",
+        "summary": "Airtime VTU",
+        "description": "",
+        "tags": [
+          "VTU"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "getInfo",
+                      "buy"
+                    ]
+                  },
+                  "providerCode": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "reference": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/data": {
+      "post": {
+        "operationId": "vtu-data",
+        "summary": "Data VTU",
+        "description": "",
+        "tags": [
+          "VTU"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "getInfo",
+                      "buy"
+                    ]
+                  },
+                  "providerCode": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "planCode": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "reference": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/V1/betting": {
+      "post": {
+        "operationId": "vtu-betting",
+        "summary": "Betting VTU",
+        "description": "",
+        "tags": [
+          "VTU"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "getInfo",
+                      "verify",
+                      "buy"
+                    ]
+                  },
+                  "providerCode": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Account"
+    },
+    {
+      "name": "Virtual Accounts"
+    },
+    {
+      "name": "Bank"
+    },
+    {
+      "name": "Transfers"
+    },
+    {
+      "name": "Exchange"
+    },
+    {
+      "name": "Virtual Cards"
+    },
+    {
+      "name": "VTU"
+    }
+  ]
+}
