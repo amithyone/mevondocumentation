@@ -2,7 +2,7 @@
 
 Official-style MevonPay API documentation — virtual accounts, transfers, FX, virtual dollar cards, VTU bill payments, and webhooks.
 
-**Live site (after Fern setup):** [mevonpay.docs.buildwithfern.com](https://mevonpay.docs.buildwithfern.com)
+**Live site:** [mevonpay-209643.docs.buildwithfern.com](https://mevonpay-209643.docs.buildwithfern.com)
 
 ## Repository layout
 
@@ -17,7 +17,7 @@ Official-style MevonPay API documentation — virtual accounts, transfers, FX, v
 1. Open [Fern Dashboard](https://dashboard.buildwithfern.com).
 2. Create or select the **mevonpay** organization.
 3. **Connect this GitHub repo:** `amithyone/mevondocumentation`
-4. Set the docs URL in `fern/docs.yml` if needed (`mevonpay.docs.buildwithfern.com`).
+4. Docs URL is set in `fern/docs.yml` (`mevonpay-209643.docs.buildwithfern.com`).
 5. Add GitHub repository secret **`FERN_TOKEN`** (API key from Fern Dashboard → Settings → API keys).
 
 ## Publish
@@ -54,7 +54,7 @@ After publishing, connect Cursor to the docs MCP server:
 
 ```json
 "mevonpay.docs.buildwithfern.com": {
-  "url": "https://mevonpay.docs.buildwithfern.com/_mcp/server",
+  "url": "https://mevonpay-209643.docs.buildwithfern.com/_mcp/server",
   "headers": {}
 }
 ```
